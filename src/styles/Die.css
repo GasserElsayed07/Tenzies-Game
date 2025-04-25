@@ -1,6 +1,6 @@
 button {
-    width: 70px;
-    height: 70px;
+    min-width: 70px;
+    min-height: 70px;
     box-shadow: 0px 2px 2px 0px #00000026;
     background-color: white;
     border: 0px;
@@ -9,9 +9,15 @@ button {
     /* text */
     font-family: Karla;
     font-weight: 700;
-    font-size: 20.59px;
+    font-size: 40px;
     line-height: 100%;
     letter-spacing: 0%;
     text-align: center;
 
+}
+
+.roll{
+    min-width: 180px;
+    background-color: #5035FF;
+    color: white;
 }
