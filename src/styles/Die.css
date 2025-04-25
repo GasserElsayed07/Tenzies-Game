@@ -5,6 +5,7 @@ button {
     background-color: white;
     border: 0px;
     border-radius: 8px;
+    cursor: pointer;
     /* text */
     font-family: Karla;
     font-weight: 700;
