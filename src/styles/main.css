@@ -43,3 +43,7 @@ section{
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-gap: 36px;
 }
+
+h1{
+    color: black;
+}

@@ -9,6 +9,7 @@ export default function Die(props){
         <button
             style={dieStyle}
             onClick={() => props.hold(props.id)}
+
         >
             {props.obj.value}
         </button>
