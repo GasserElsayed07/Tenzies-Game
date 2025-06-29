@@ -5,10 +5,11 @@ import Confetti from "react-confetti"
 
 export default function App() {
   // state of an array of objects that holds 2 values: (value, isHeld)
-  const [objects, setObjects] = useState(getArrObj());
+  const [objects, setObjects] = useState(() => getArrObj());
   const [won, setWon] = useState(false);
 
   function getArrObj() {
+    console.log("the state initialize function ran")
     const arrOfNums = Array.from({ length: 10 }, () => ({
       value: Math.ceil(Math.random() * 6),
       isHeld: false,
