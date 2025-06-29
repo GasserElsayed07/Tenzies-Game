@@ -1,49 +1,52 @@
-import Die from './components/Die.jsx'
-import { useState } from "react"
-import { useEffect } from "react"
+import Die from "./components/Die.jsx";
+import { useState } from "react";
+import { useEffect } from "react";
+import Confetti from "react-confetti"
 
 export default function App() {
   // state of an array of objects that holds 2 values: (value, isHeld)
-  const [objects, setObjects] = useState(getArrObj())
-  const [won, setWon] = useState(false)
+  const [objects, setObjects] = useState(getArrObj());
+  const [won, setWon] = useState(false);
 
   function getArrObj() {
-    const arrOfNums = Array.from({ length: 10 }, () => ({ value: Math.ceil(Math.random() * 6), isHeld: false }));
+    const arrOfNums = Array.from({ length: 10 }, () => ({
+      value: Math.ceil(Math.random() * 6),
+      isHeld: false,
+    }));
     return arrOfNums;
   }
 
   const buttons = objects.map((obj, index) => {
     return (
-      <Die
-        obj={obj}
-        key={index}
-        id={index}
-        hold={hold}
-        checkWin={checkWin}
-      />
-    )
-  })
+      <Die obj={obj} key={index} id={index} hold={hold} checkWin={checkWin} />
+    );
+  });
 
   function reRoll() {
-    setObjects(objects.map((entry) => (
-      entry.isHeld == true ? entry : { ...entry, value: Math.ceil(Math.random() * 6) }
-    )))
+    setObjects(
+      objects.map((entry) =>
+        entry.isHeld == true
+          ? entry
+          : { ...entry, value: Math.ceil(Math.random() * 6) }
+      )
+    );
   }
-
 
   function hold(index) {
     // console.log("my id is " + index + " " + Objects.length)
 
-    setObjects(prev => objects.map((value, ind) => (
-      (index == ind) ? { ...value, isHeld: !value.isHeld } : value
-    )))
-    
-    console.log("hold function executed!")
+    setObjects((prev) =>
+      objects.map((value, ind) =>
+        index == ind ? { ...value, isHeld: !value.isHeld } : value
+      )
+    );
+
+    console.log("hold function executed!");
     checkWin();
   }
 
   function checkHold() {
-    return objects.every(element => element.isHeld === true);
+    return objects.every((element) => element.isHeld === true);
   }
 
   function checkWin() {
@@ -51,43 +54,56 @@ export default function App() {
       const num = objects[0].value;
       for (let index = 1; index < 10; index++) {
         if (objects[index].value != num) {
-          console.log(`Checking index ${index}: value=${objects[index].value}, target=${num}`);
-          setWon(false)
+          console.log(
+            `Checking index ${index}: value=${objects[index].value}, target=${num}`
+          );
+          setWon(false);
           return;
-        }
-        else if (objects[index].isHeld != true) {
-          console.log(`button is not held ${index}: value=${objects[index].value}`)
-          setWon(false)
+        } else if (objects[index].isHeld != true) {
+          console.log(
+            `button is not held ${index}: value=${objects[index].value}`
+          );
+          setWon(false);
           return;
-        }
-        else {
+        } else {
           console.log("non of the conditions were met");
         }
-
       }
       setWon(true);
-      console.log("user WON!" + won)
+      console.log("user WON!" + won);
       return;
+    } else {
+      setWon(false);
     }
-    else {setWon(false)}
   }
 
   useEffect(() => {
-  checkWin();
-}, [objects]);
+    checkWin();
+  }, [objects]);
 
   return (
     <main>
 
-      {won && <h1>You Won!</h1>}
+      {won && <Confetti/>}
+      {won ? 
+        <h1>You Won!</h1>
+       : 
+        <div>
+          <h1 className="title">Tenzies</h1>
+          <p className="instructions">
+            Roll until all dice are the same. Click each die to freeze it at its
+            current value between rolls.
+          </p>
+        </div>
+      }      
 
-      <section>
-        {buttons}
-      </section>
+      <section>{buttons}</section>
 
-      <button className='roll' onClick={reRoll}>{won ? "NEW GAME" : "ROLL"}</button>
+      <button className="roll" onClick={reRoll}>
+        {won ? "NEW GAME" : "ROLL"}
+      </button>
     </main>
-  )
+  );
 }
 
 /*
